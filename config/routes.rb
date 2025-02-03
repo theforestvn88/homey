@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :assignments
-  resources :projects
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/*
@@ -8,5 +6,8 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   devise_for :users
-  # root "posts#index"
+  resources :comments
+  resources :assignments
+  resources :projects
+  root "projects#index"
 end
