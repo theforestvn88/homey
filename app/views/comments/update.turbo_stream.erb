@@ -1,0 +1,13 @@
+<%= clear_modal %>
+
+<% if @comment.errors.any? %>
+    <%= turbo_stream.replace "modal" do %>
+        <%= render template: "comments/edit", formats: [:html] %>
+    <% end %>
+<% else %>
+    <%= turbo_stream.replace dom_id(@comment) do %>
+        <%= render @comment %>
+    <% end %>
+<% end %>
+
+<%= show_flash_if_any %>

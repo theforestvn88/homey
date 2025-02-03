@@ -1,10 +1,7 @@
 class AssignmentsController < ApplicationController
+  before_action :authenticate_user!, except: %i[ show ]
+  before_action :set_project
   before_action :set_assignment, only: %i[ show edit update destroy ]
-
-  # GET /assignments or /assignments.json
-  def index
-    @assignments = Assignment.all
-  end
 
   # GET /assignments/1 or /assignments/1.json
   def show
@@ -63,6 +60,10 @@ class AssignmentsController < ApplicationController
       @assignment = Assignment.find(params[:id])
     end
 
+    def set_project
+      @project = Project.find(params[:project_id])
+    end
+    
     # Only allow a list of trusted parameters through.
     def assignment_params
       params.require(:assignment).permit(:user_id_id, :project_id_id)

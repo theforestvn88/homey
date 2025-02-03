@@ -9,8 +9,8 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :comments, except: %i[ index ]
-    resources :assignments
+    resources :assignments, except: %i[ index ]
   end
-  
+
   root "projects#index"
 end
