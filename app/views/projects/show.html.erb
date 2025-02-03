@@ -1,9 +1,13 @@
 <%= turbo_frame_tag dom_id(@project) do %>
   <%= render @project %>
 
-  <%= link_to "+ new comment", new_project_comment_path(@project), data: { turbo_frame: :modal }, id: "#{dom_id(@project)}-new-comment", class: "text-gray-600 border border-dashed border-indigo-300 hover:bg-gray-100 w-96 min-h-5 px-10 flex items-center" %>
+  <%= link_to "+ new comment", new_project_comment_path(@project), data: { turbo_frame: :modal }, id: "#{dom_id(@project)}_new_comment", class: "text-gray-600 border border-dashed border-indigo-300 hover:bg-gray-100 w-96 min-h-5 px-10 flex items-center" %>
 
   <%= turbo_frame_tag "#{dom_id(@project)}_comments" do %>
-    <%= render @project.comments %>
+    <%= render @comments %>
+  <% end %>
+
+  <% if @next_offset %>
+    <%= link_to "load more", load_more_comments_project_path(id: @project.id, offset: @next_offset), data: {turbo_stream: true}, id: "#{dom_id(@project)}_load_more", class: "text-gray-600 border border-dashed border-indigo-300 hover:bg-gray-100 w-96 min-h-5 px-10 flex items-center" %>
   <% end %>
 <% end %>

@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :comments, except: %i[ index ]
+    member do
+      get :load_more_comments
+    end
     resources :assignments, except: %i[ index ]
   end
 

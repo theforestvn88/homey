@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy ]
+  before_action :set_project, only: %i[ show load_more_comments edit update destroy ]
 
   # GET /projects or /projects.json
   def index
@@ -8,6 +8,15 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1 or /projects/1.json
   def show
+    load_comments
+  end
+
+  def load_more_comments
+    load_comments
+    
+    respond_to do |format|
+      format.turbo_stream {}
+    end
   end
 
   # GET /projects/new
@@ -58,13 +67,19 @@ class ProjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_project
       @project = Project.find(params[:id])
     end
-
-    # Only allow a list of trusted parameters through.
+    
     def project_params
       params.require(:project).permit(:title, :description, :user_id)
+    end
+
+    PAGE = 10
+    def load_comments
+      offset = params[:offset].to_i
+      @comments = @project.comments.offset(offset).limit(PAGE)
+      @next_offset = offset + PAGE unless @comments.size < PAGE
     end
 end

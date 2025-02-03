@@ -14,15 +14,14 @@ require 'rails_helper'
 
 RSpec.describe "/projects", type: :request do
   
-  # This should return the minimal set of attributes required to create a valid
-  # Project. As you add validations to Project, be sure to
-  # adjust the attributes here as well.
+  let(:user) { create(:user) }
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { user_id: user.id, title: 'a project' }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { user_id: nil, title: 'a project' }
   }
 
   describe "GET /index" do
@@ -130,6 +129,23 @@ RSpec.describe "/projects", type: :request do
       project = Project.create! valid_attributes
       delete project_url(project)
       expect(response).to redirect_to(projects_url)
+    end
+  end
+
+  describe "GET /projects/:id/load_more_comments" do
+    let!(:project) { create(:project, user_id: user.id) }
+    let!(:comments) { (1..20).map { |i| create(:comment, user_id: user.id, project_id: project.id) } }
+
+    it "append comments" do
+      get load_more_comments_project_path(id: project.id), as: :turbo_stream
+      assert_select("turbo-stream[action='append'][target='project_#{project.id}_comments']", 1)
+      assert_select("turbo-stream[action='replace'][target='project_#{project.id}_load_more']", 1)
+    end
+
+    it "hide load more if there's no more comments" do
+      get load_more_comments_project_path(id: project.id, offset: 20), as: :turbo_stream
+      assert_select("turbo-stream[action='append'][target='project_#{project.id}_comments']", 1)
+      assert_select("turbo-stream[action='replace'][target='project_#{project.id}_load_more']", 0)
     end
   end
 end
