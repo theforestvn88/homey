@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :assignments
   resources :projects
   get "up" => "rails/health#show", as: :rails_health_check
 
