@@ -6,8 +6,11 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   devise_for :users
-  resources :comments
-  resources :assignments
-  resources :projects
+
+  resources :projects do
+    resources :comments, except: %i[ index ]
+    resources :assignments
+  end
+  
   root "projects#index"
 end
