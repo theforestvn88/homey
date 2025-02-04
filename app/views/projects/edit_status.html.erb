@@ -1,0 +1,5 @@
+<%= render(layout: 'shared/modal', locals: { title: 'Update Status' }) do %>
+    <div class="md:w-2/3 w-full">
+      <%= render "status_form", project: @project %>
+    </div>
+<% end %>

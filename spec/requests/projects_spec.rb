@@ -148,4 +148,16 @@ RSpec.describe "/projects", type: :request do
       assert_select("turbo-stream[action='replace'][target='project_#{project.id}_load_more']", 0)
     end
   end
+
+  describe "Patch /projects/:id/status" do
+    let!(:project) { create(:project, user_id: user.id) }
+
+    it "update project status" do
+      patch update_status_project_path(project), params: { project: {status: 'active'} }, as: :turbo_stream
+      assert_select("turbo-stream[action='update'][target='project_#{project.id}_status']", 1)
+
+      project.reload
+      expect(project.active?).to be_truthy
+    end
+  end
 end

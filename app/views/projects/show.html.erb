@@ -1,6 +1,8 @@
 <%= turbo_frame_tag dom_id(@project) do %>
   <%= render @project %>
 
+  <%= link_to "update status", edit_status_project_path(@project), data: { turbo_frame: :modal }, id: "#{dom_id(@project)}_update_status", class: "text-gray-600 border border-dashed border-indigo-300 hover:bg-gray-100 w-96 min-h-5 px-10 flex items-center" %>
+
   <%= link_to "+ new comment", new_project_comment_path(@project), data: { turbo_frame: :modal }, id: "#{dom_id(@project)}_new_comment", class: "text-gray-600 border border-dashed border-indigo-300 hover:bg-gray-100 w-96 min-h-5 px-10 flex items-center" %>
 
   <%= turbo_frame_tag "#{dom_id(@project)}_comments" do %>

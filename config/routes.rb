@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :comments, except: %i[ index ]
     member do
       get :load_more_comments
+      get :edit_status
+      patch :update_status
     end
     resources :assignments, except: %i[ index ]
   end

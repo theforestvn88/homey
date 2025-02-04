@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show load_more_comments edit update destroy ]
+  before_action :set_project, except: %i[ index new create ]
 
   # GET /projects or /projects.json
   def index
@@ -56,6 +56,19 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # GET /projects/1/edit_status
+  def edit_status
+  end
+  
+  # PATCH /projects/1/update_status
+  def update_status
+    respond_to do |format|
+      # TODO: move to service
+      @project.update(project_params)
+      format.turbo_stream {}
+    end
+  end
+
   # DELETE /projects/1 or /projects/1.json
   def destroy
     @project.destroy!
@@ -73,7 +86,7 @@ class ProjectsController < ApplicationController
     end
     
     def project_params
-      params.require(:project).permit(:title, :description, :user_id)
+      params.require(:project).permit(:title, :description, :user_id, :status)
     end
 
     PAGE = 10

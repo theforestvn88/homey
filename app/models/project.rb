@@ -4,9 +4,14 @@ class Project < ApplicationRecord
   has_many :members, through: :assignments, source: :user
   has_many :comments, -> { order(updated_at: :desc) }, dependent: :destroy
 
-  enum status: { 
-    pending: 'Pending',
-    active: 'Active',
-    archived: 'Archived' 
+  enum :status, {
+    :pending => "Pending", 
+    :active => "Active", 
+    :archived => "Archived" 
   }
+
+  # TODO: filter available status base on current status
+  def available_status
+    Project.statuses
+  end
 end
