@@ -59,10 +59,13 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit_status
   def edit_status
+    authorize @project
   end
   
   # PATCH /projects/1/update_status
   def update_status
+    authorize @project
+    
     respond_to do |format|
       @update_status = project_params[:status]
       @result = UpdateProjectStatus.new(project: @project, user: current_user).update(@update_status)

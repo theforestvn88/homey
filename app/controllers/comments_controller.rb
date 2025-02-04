@@ -18,7 +18,10 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    @comment = Comment.create(user: current_user, project: @project, **comment_params)
+    @comment = Comment.new(user: current_user, project: @project, **comment_params)
+    authorize @comment
+
+    @comment.save
 
     respond_to do |format|
       format.turbo_stream { }
@@ -27,6 +30,8 @@ class CommentsController < ApplicationController
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
+    authorize @comment
+
     @comment.update(comment_params)
 
     respond_to do |format|
@@ -36,6 +41,8 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
+    authorize @comment
+    
     @comment.destroy!
 
     respond_to do |format|
