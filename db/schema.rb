@@ -10,9 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_03_054437) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_04_020039) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "project_status", ["Pending", "Active", "Archived"]
 
   create_table "assignments", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -39,6 +43,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_054437) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "status", enum_type: "project_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
