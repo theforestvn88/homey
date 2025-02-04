@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "/comments", type: :request do
-  let(:user) { create(:user) }
-  let(:project) { create(:project, user_id: user.id) }
+  let!(:user) { create(:user) }
+  let!(:project) { create(:project, user_id: user.id) }
+  let!(:assignment) { create(:assignment, user_id: user.id, project_id: project.id) }
 
   let(:valid_attributes) {
     { content: "this is a comment", user: user, project: project }
