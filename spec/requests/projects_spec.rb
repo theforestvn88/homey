@@ -24,6 +24,10 @@ RSpec.describe "/projects", type: :request do
     { user_id: nil, title: 'a project' }
   }
 
+  before do
+    sign_in user
+  end
+  
   describe "GET /index" do
     it "renders a successful response" do
       Project.create! valid_attributes
@@ -158,6 +162,11 @@ RSpec.describe "/projects", type: :request do
 
       project.reload
       expect(project.active?).to be_truthy
+    end
+
+    it "prepend status change comment" do
+      patch update_status_project_path(project), params: { project: {status: 'active'} }, as: :turbo_stream
+      assert_select("turbo-stream[action='prepend'][target='project_#{project.id}_comments']", 1)
     end
   end
 end

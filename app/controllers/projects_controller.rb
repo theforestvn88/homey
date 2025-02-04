@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_project, except: %i[ index new create ]
 
   # GET /projects or /projects.json
@@ -63,8 +64,8 @@ class ProjectsController < ApplicationController
   # PATCH /projects/1/update_status
   def update_status
     respond_to do |format|
-      # TODO: move to service
-      @project.update(project_params)
+      @update_status = project_params[:status]
+      @result = UpdateProjectStatus.new(project: @project, user: current_user).update(@update_status)
       format.turbo_stream {}
     end
   end

@@ -43,7 +43,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_020039) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.enum "status", enum_type: "project_status"
+    t.enum "status", default: "Pending", null: false, enum_type: "project_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 

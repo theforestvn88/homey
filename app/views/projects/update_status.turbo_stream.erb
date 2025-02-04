@@ -1,7 +1,13 @@
 <%= clear_modal %>
 
-<%= turbo_stream.update "#{dom_id(@project)}_status" do %>
-    <%= t(@project.status) %>
+<% if @result.success %>
+    <%= turbo_stream.update "#{dom_id(@project)}_status" do %>
+        <%= t(@update_status) %>
+    <% end %>
+
+    <%= turbo_stream.prepend "#{dom_id(@project)}_comments" do %>
+        <%= render @result.data[:comment] %>
+    <% end %>
 <% end %>
 
 <%= show_flash_if_any %>
