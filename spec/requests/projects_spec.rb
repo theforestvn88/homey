@@ -27,7 +27,7 @@ RSpec.describe "/projects", type: :request do
   before do
     sign_in user
   end
-  
+
   describe "GET /index" do
     it "renders a successful response" do
       Project.create! valid_attributes
@@ -155,6 +155,7 @@ RSpec.describe "/projects", type: :request do
 
   describe "Patch /projects/:id/status" do
     let!(:project) { create(:project, user_id: user.id) }
+    let!(:assignment) { create(:assignment, user_id: user.id, project_id: project.id) }
 
     it "update project status" do
       patch update_status_project_path(project), params: { project: {status: 'active'} }, as: :turbo_stream
