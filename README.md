@@ -45,6 +45,12 @@ homey assignment
 
         my expect: postgresql enum
 
+    1.5 project conversation history
+
+        question: The project conversation history should list comments and status changes. So, do we need to create a model to represent status changes? If yes, then we should create a polymorphic model for both comments and status changes to make displaying the history easier, right?
+
+        my expect: No need to create a status-changes model. We only need to create a comment manually with the status-change as its content. That's all!
+
 
 2. Application
 
@@ -52,7 +58,7 @@ homey assignment
 
             question: should we implement authentication and authorization ?
 
-            my expect: not yet
+            my expect: yes, authentication with devise and authorization with pundit
 
     2.2 changing project status
 
@@ -62,7 +68,7 @@ homey assignment
 
         question: how can we handle race condition when users update the project status ? using distributed lock (redis) or db lock (row-lock select for update)
 
-        my expect: db lock
+        my expect: row lock
 
 
     2.3 duplication
