@@ -65,7 +65,7 @@ class ProjectsController < ApplicationController
   # PATCH /projects/1/update_status
   def update_status
     authorize @project
-    
+
     respond_to do |format|
       @update_status = project_params[:status]
       @result = UpdateProjectStatus.new(project: @project, user: current_user).update(@update_status)
@@ -96,7 +96,7 @@ class ProjectsController < ApplicationController
     PAGE = 10
     def load_comments
       offset = params[:offset].to_i
-      @comments = @project.comments.offset(offset).limit(PAGE)
+      @comments = @project.comments.includes(:user).offset(offset).limit(PAGE)
       @next_offset = offset + PAGE unless @comments.size < PAGE
     end
 end

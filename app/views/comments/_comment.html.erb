@@ -1,5 +1,9 @@
 <%= turbo_frame_tag dom_id(comment) do %>
-  <div class="border border-indigo-600 relative">
+  <div class="border border-indigo-600 relative px-2">
+      <div class="flex justify-start">
+        <span>by <%= comment.user.email %></span>
+        <span>, <%= comment.updated_at %></span>
+      </div>
       <%= comment.content %>
       <span class="flex justify-end absolute bottom-0 right-0 z-10">
           <%= link_to "edit", edit_project_comment_path(id: comment.id, project_id: comment.project_id), data: {turbo_frame: :modal}, class: "text-indigo-600 underline hover:bg-indigo-200" %>
