@@ -21,8 +21,11 @@ class CommentsController < ApplicationController
     @comment = Comment.new(user: current_user, project: @project, **comment_params)
     authorize @comment
 
+    @comment.checksum = CommentChecksum.new.create(@comment.content)
     @comment.save
-
+  rescue => e
+    @comment.errors.add :content, :invalid, message: "Invalid"
+  ensure
     respond_to do |format|
       format.turbo_stream { }
     end
@@ -42,7 +45,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1 or /comments/1.json
   def destroy
     authorize @comment
-    
+
     @comment.destroy!
 
     respond_to do |format|
