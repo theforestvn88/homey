@@ -69,7 +69,7 @@ RSpec.describe "/comments", type: :request do
           post project_comments_url(project_id: project.id), params: { comment: invalid_attributes }
         }.to change(Comment, :count).by(0)
       end
-    
+
       it "not prepend any new comment" do
         post project_comments_url(project_id: project.id), params: { comment: invalid_attributes }, as: :turbo_stream
         assert_select("turbo-stream[action='prepend'][target='project_#{project.id}_comments']", 0)
@@ -108,7 +108,6 @@ RSpec.describe "/comments", type: :request do
         patch project_comment_url(project_id: project.id, id: comment.id), params: { comment: invalid_attributes }, as: :turbo_stream
         assert_select("turbo-stream[action='replace'][target='comment_#{comment.id}']", 0)
       end
-    
     end
   end
 

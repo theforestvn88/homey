@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
 
   rate_limit to: 3, within: 1.minute,
     by: -> { request.ip },
-    only: [:create, :update]
+    only: [ :create, :update ]
 
   # GET /comments/1 or /comments/1.json
   def show
@@ -58,7 +58,7 @@ class CommentsController < ApplicationController
   end
 
   private
-    
+
     def set_comment
       @comment = Comment.find(params[:id])
     end

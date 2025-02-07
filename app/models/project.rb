@@ -5,9 +5,9 @@ class Project < ApplicationRecord
   has_many :comments, -> { order(updated_at: :desc) }, dependent: :destroy
 
   enum :status, {
-    :pending => "Pending", 
-    :active => "Active", 
-    :archived => "Archived" 
+    pending: "Pending",
+    active: "Active",
+    archived: "Archived"
   }
 
   # TODO: filter available status base on current status

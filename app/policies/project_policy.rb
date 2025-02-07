@@ -17,5 +17,5 @@ class ProjectPolicy < ApplicationPolicy
 
         def assigned?
             Assignment.exists?(user_id: @user.id, project_id: @record.id)
-        end 
+        end
 end

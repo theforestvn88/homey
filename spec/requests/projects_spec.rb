@@ -13,7 +13,6 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/projects", type: :request do
-  
   let(:user) { create(:user) }
 
   let(:valid_attributes) {
@@ -80,12 +79,11 @@ RSpec.describe "/projects", type: :request do
         }.to change(Project, :count).by(0)
       end
 
-    
+
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
         post projects_url, params: { project: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 
@@ -111,13 +109,11 @@ RSpec.describe "/projects", type: :request do
     end
 
     context "with invalid parameters" do
-    
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         project = Project.create! valid_attributes
         patch project_url(project), params: { project: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 
@@ -158,7 +154,7 @@ RSpec.describe "/projects", type: :request do
     let!(:assignment) { create(:assignment, user_id: user.id, project_id: project.id) }
 
     it "update project status" do
-      patch update_status_project_path(project), params: { project: {status: 'active'} }, as: :turbo_stream
+      patch update_status_project_path(project), params: { project: { status: 'active' } }, as: :turbo_stream
       assert_select("turbo-stream[action='update'][target='project_#{project.id}_status']", 1)
 
       project.reload
@@ -166,7 +162,7 @@ RSpec.describe "/projects", type: :request do
     end
 
     it "prepend status change comment" do
-      patch update_status_project_path(project), params: { project: {status: 'active'} }, as: :turbo_stream
+      patch update_status_project_path(project), params: { project: { status: 'active' } }, as: :turbo_stream
       assert_select("turbo-stream[action='prepend'][target='project_#{project.id}_comments']", 1)
     end
   end

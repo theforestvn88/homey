@@ -7,7 +7,7 @@ RSpec.describe Project, type: :model do
   it { should have_many(:assignments).dependent(:destroy) }
   it { should have_many(:members) }
   it { should have_many(:comments).order(updated_at: :desc).dependent(:destroy) }
-  it { 
+  it {
       should define_enum_for(:status).
         with_values(
           pending: 'Pending',

@@ -63,7 +63,7 @@ class AssignmentsController < ApplicationController
     def set_project
       @project = Project.find(params[:project_id])
     end
-    
+
     # Only allow a list of trusted parameters through.
     def assignment_params
       params.require(:assignment).permit(:user_id_id, :project_id_id)

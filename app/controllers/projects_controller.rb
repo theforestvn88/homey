@@ -14,9 +14,9 @@ class ProjectsController < ApplicationController
 
   def load_more_comments
     load_comments
-    
+
     respond_to do |format|
-      format.turbo_stream {}
+      format.turbo_stream { }
     end
   end
 
@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
   def edit_status
     authorize @project
   end
-  
+
   # PATCH /projects/1/update_status
   def update_status
     authorize @project
@@ -69,7 +69,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       @update_status = project_params[:status]
       @result = UpdateProjectStatus.new(project: @project, user: current_user).update(@update_status)
-      format.turbo_stream {}
+      format.turbo_stream { }
     end
   end
 
@@ -88,7 +88,7 @@ class ProjectsController < ApplicationController
     def set_project
       @project = Project.find(params[:id])
     end
-    
+
     def project_params
       params.require(:project).permit(:title, :description, :user_id, :status)
     end
@@ -96,7 +96,7 @@ class ProjectsController < ApplicationController
     PAGE = 10
     def load_comments
       offset = params[:offset].to_i
-      @comments = Rails.cache.fetch([@project, :comments, offset], expires_in: 1.minutes) do
+      @comments = Rails.cache.fetch([ @project, :comments, offset ], expires_in: 1.minutes) do
         @project.comments.includes(:user).offset(offset).limit(PAGE)
       end
       @next_offset = offset + PAGE unless @comments.size < PAGE
