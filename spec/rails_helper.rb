@@ -74,3 +74,11 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+def system_test_sign_in(user_email, password)
+  visit new_user_session_path
+  fill_in 'Email', with: user_email
+  fill_in 'Password', with: password
+  click_on 'Log in'
+end
+
