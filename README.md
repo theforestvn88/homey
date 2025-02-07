@@ -75,7 +75,7 @@ homey assignment
 
         question: how to handle duplication cases, such as user click submit multiple times ?
 
-        my expect: we should throttling on frontend and sending timestamp along with the comment to server, on server side we will check. Alternatively, we can use a rate limiter on server side.
+        my expect: we should throttling on frontend and sending timestamp along with the comment to server, on server side we will check. Alternatively, we can use a rate limiter on server side. We are using Rails 7.2 which support an inbuilt API to handle Rate Limiting rules.
 
 
         question: how about the case user send duplicate requests for the same comment ?

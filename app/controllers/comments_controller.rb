@@ -3,6 +3,10 @@ class CommentsController < ApplicationController
   before_action :set_project
   before_action :set_comment, only: %i[ show edit update destroy ]
 
+  rate_limit to: 3, within: 1.minute,
+    by: -> { request.ip },
+    only: [:create, :update]
+
   # GET /comments/1 or /comments/1.json
   def show
   end
