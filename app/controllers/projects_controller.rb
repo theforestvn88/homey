@@ -2,6 +2,10 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_project, except: %i[ index new create ]
 
+  rate_limit to: 1, within: 1.minute,
+    by: -> { request.ip },
+    only: :update_status
+
   # GET /projects or /projects.json
   def index
     @projects = Project.all
