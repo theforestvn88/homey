@@ -6,7 +6,9 @@
     <% end %>
 <% else %>
     <%= turbo_stream.prepend "#{dom_id(@comment.project)}_comments" do %>
-        <%= render @comment %>
+        <% cache @comment do %>
+            <%= render @comment %>
+        <% end %>
     <% end %>
 <% end %>
 

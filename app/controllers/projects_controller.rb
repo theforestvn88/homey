@@ -96,7 +96,9 @@ class ProjectsController < ApplicationController
     PAGE = 10
     def load_comments
       offset = params[:offset].to_i
-      @comments = @project.comments.includes(:user).offset(offset).limit(PAGE)
+      @comments = Rails.cache.fetch([@project, :comments, offset], expires_in: 1.minutes) do
+        @project.comments.includes(:user).offset(offset).limit(PAGE)
+      end
       @next_offset = offset + PAGE unless @comments.size < PAGE
     end
 end
