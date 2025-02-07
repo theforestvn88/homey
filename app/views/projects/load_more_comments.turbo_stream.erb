@@ -1,5 +1,5 @@
 <%= turbo_stream.append "#{dom_id(@project)}_comments" do %>
-    <%= render @comments %>
+    <%= render partial: 'comments/comment', collection: @comments, cache: true %>
 <% end %>
 
 <% if @next_offset %>

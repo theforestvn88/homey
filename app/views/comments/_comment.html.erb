@@ -2,7 +2,7 @@
   <div class="border border-indigo-600 relative px-2">
       <div class="flex justify-start">
         <span>by <%= comment.user.email %></span>
-        <span>, <%= comment.updated_at %></span>
+        <span>, <%= time_ago_in_words(comment.updated_at) %></span>
       </div>
       <%= comment.content %>
       <span class="flex justify-end absolute bottom-0 right-0 z-10">
