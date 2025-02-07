@@ -15,10 +15,11 @@ RSpec.describe UpdateProjectStatus, type: :service do
                 expect(project.active?).to be_truthy
             end
 
-            it "create change-status comment" do
+            it "create change-status unchangeable comment" do
                 result = subject.update('archived')
                 expect(result.success).to be_truthy
                 expect(result.data[:comment]).not_to be_nil
+                expect(result.data[:comment].changeable).to be_falsy
             end
         end
 

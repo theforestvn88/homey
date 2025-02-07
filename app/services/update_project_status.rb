@@ -13,7 +13,7 @@ class UpdateProjectStatus
                 ActiveRecord::Base.transaction do
                     old_status = @project.status
                     Project.find(@project.id).lock!.update!(status: update_status)
-                    @result.data[:comment] = Comment.create!(user_id: @user.id, project_id: @project.id, content: "#{@user.email} update project status from #{old_status} to #{update_status}")
+                    @result.data[:comment] = Comment.create!(user_id: @user.id, project_id: @project.id, changeable: false, content: "#{@user.email} update project status from #{old_status} to #{update_status}")
 
                     @result.success = true
                 end

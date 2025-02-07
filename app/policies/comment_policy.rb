@@ -6,24 +6,24 @@ class CommentPolicy < ApplicationPolicy
     end
 
     def update?
-        comment_owner?
+        @record.changeable && comment_owner?
     end
 
     def destroy?
-        comment_owner?
+        @record.changeable && comment_owner?
     end
 
     private
 
         def project_owner?
-            @record.project.user_id == @user.id
+            @record.project.user_id == @user&.id
         end
 
         def assigned?
-            Assignment.exists?(user_id: @user.id, project_id: @record.project_id)
+            Assignment.exists?(user_id: @user&.id, project_id: @record.project_id)
         end
 
         def comment_owner?
-            @record.user_id == @user.id
+            @record.user_id == @user&.id
         end
 end
