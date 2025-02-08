@@ -10,6 +10,6 @@
   <% end %>
 
   <% if @next_offset %>
-    <%= link_to "load more", load_more_comments_project_path(id: @project.id, offset: @next_offset), data: {turbo_stream: true}, id: "#{dom_id(@project)}_load_more", class: "text-gray-600 border border-dashed border-indigo-300 hover:bg-gray-100 w-96 min-h-5 px-10 flex items-center" %>
+    <%= render partial: 'projects/load_more', locals: { project: @project, next_offset: @next_offset } %>
   <% end %>
 <% end %>
