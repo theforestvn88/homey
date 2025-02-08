@@ -16,7 +16,7 @@ describe "project status", type: :system do
   it "update" do
     click_link("update status")
 
-    select "Active", :from => "Status"
+    select "Active", from: "Status"
     click_on "Update Project"
 
     expect(page).to have_content "Active"

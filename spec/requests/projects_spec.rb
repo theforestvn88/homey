@@ -166,7 +166,7 @@ RSpec.describe "/projects", type: :request do
         patch update_status_project_path(project), params: { project: { status: 'active' } }, as: :turbo_stream
         assert_select("turbo-stream[action='prepend'][target='project_#{project.id}_comments']", 1)
       }.to change { Comment.count }.by(1)
-      
+
       expect(Comment.last.changeable).to be_falsy
     end
   end

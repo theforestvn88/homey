@@ -81,4 +81,3 @@ def system_test_sign_in(user_email, password)
   fill_in 'Password', with: password
   click_on 'Log in'
 end
-
