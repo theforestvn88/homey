@@ -1,9 +1,9 @@
 <div id="<%= dom_id project %>">
-  <div class="my-5">
-    <div class="flex justify-start">
+  <div class="w-full my-5">
+    <div class="w-full flex justify-between">
       <h1 class="font-bold"><%= project.title %></h1>
       <%= turbo_frame_tag "#{dom_id(project)}_status" do %>
-        <%= link_to t(project.status), edit_status_project_path(project), data: { turbo_frame: :modal }, id: "#{dom_id(project)}_update_status", class: "text-gray-600 hover:text-blue-600 w-96 min-h-5 px-10 flex items-center" %></span>
+        <%= link_to t(project.status), edit_status_project_path(project), data: { turbo_frame: :modal }, id: "#{dom_id(project)}_update_status", class: "text-gray-600 hover:text-indigo-600 bg-indigo-50 hover:bg-indigo-100 min-h-5 px-3 flex items-center" %></span>
       <% end %>
     </div>
     <div class="mt-2 mx-5 font-light">

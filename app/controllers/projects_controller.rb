@@ -4,6 +4,10 @@ class ProjectsController < ApplicationController
 
   rate_limit to: 1, within: 1.minute,
     by: -> { request.ip },
+    with: -> {
+      flash.now[:notice] = "Too many update !!! Please try after some time"
+      render :update_status, status: 429
+    },
     only: :update_status
 
   # GET /projects or /projects.json
