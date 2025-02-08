@@ -1,14 +1,13 @@
 <div id="<%= dom_id project %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Title:</strong>
-    <%= project.title %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= project.description %>
-  </p>
-
-  <%= turbo_frame_tag "#{dom_id(project)}_status" do %>
-    <%= t(project.status) %>
-  <% end %>
+  <div class="my-5">
+    <div class="flex justify-start">
+      <h1 class="font-bold"><%= project.title %></h1>
+      <%= turbo_frame_tag "#{dom_id(project)}_status" do %>
+        <%= link_to t(project.status), edit_status_project_path(project), data: { turbo_frame: :modal }, id: "#{dom_id(project)}_update_status", class: "text-gray-600 hover:text-blue-600 w-96 min-h-5 px-10 flex items-center" %></span>
+      <% end %>
+    </div>
+    <div class="mt-2 mx-5 font-light">
+      <%= project.description %>
+    </div>
+  </div>
 </div>

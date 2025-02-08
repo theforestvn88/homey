@@ -2,7 +2,7 @@
 
 <% if @result.success %>
     <%= turbo_stream.update "#{dom_id(@project)}_status" do %>
-        <%= t(@update_status) %>
+        <%= link_to t(@update_status), edit_status_project_path(@project), data: { turbo_frame: :modal }, id: "#{dom_id(@project)}_update_status", class: "text-gray-600 hover:text-blue-600 w-96 min-h-5 px-10 flex items-center" %></span>
     <% end %>
 
     <%= turbo_stream.prepend "#{dom_id(@project)}_comments" do %>
